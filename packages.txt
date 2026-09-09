@@ -1,0 +1,72 @@
+# Packages for this rice — CachyOS / Arch.
+# Install with:  paru -S --needed - < packages.txt
+# (lines starting with # and blank lines are ignored by paru)
+
+# --- Hyprland session core ---
+hyprland
+hypridle
+hyprlock
+hyprpicker
+hyprcursor
+xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
+uwsm                       # session manager (apps launched via `uwsm app --`)
+polkit
+polkit-kde-agent
+
+# --- Shell / bar / menus ---
+waybar
+quickshell                 # clima, mediactl, keyhints, hyprquickpaper islands (repo: extra / cachyos-extra-v3)
+rofi                       # rofi-wayland
+swaync                     # notifications
+wlogout                    # session menu (SUPER+ALT+C)
+swayosd                    # volume / brightness OSD
+
+# --- Theming engine ---
+matugen                    # Material You colors from the wallpaper
+awww                       # CachyOS' renamed swww (binaries: awww / awww-daemon)
+adw-gtk-theme
+qt6ct
+papirus-icon-theme
+
+# --- Fonts (Nerd glyphs are required by waybar / islands) ---
+ttf-jetbrains-mono-nerd
+ttf-meslo-nerd
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+
+# --- CLI tools used by the scripts ---
+jq                         # ClimaClock.sh, islands
+curl
+imagemagick                # hyprquickpaper thumbnails (`magick`)
+brightnessctl
+playerctl
+fish
+
+# --- Audio ---
+pipewire
+pipewire-pulse
+wireplumber
+pavucontrol
+
+# --- Network ---
+networkmanager
+nm-connection-editor
+
+# --- Screenshots / clipboard ---
+grim
+slurp
+satty
+cliphist
+wl-clipboard
+
+# --- Optional: apps that follow the wallpaper via matugen templates ---
+# spicetify-cli             # Spotify theming  (see docs/architecture.md)
+# vencord-installer-bin     # Discord theming  (must run the installer afterwards)
+
+# --- Terminals / monitors ---
+kitty                      # primary terminal (matugen reloads it)
+alacritty
+btop
+cava

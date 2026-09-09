@@ -1,0 +1,10 @@
+# Generado por matugen — NO EDITAR
+# Consumido por hyprlock.conf
+
+$background             = rgb(1a1110)
+$surface               = rgb(1a1110)
+$on_surface            = rgb(f1dedc)
+$primary               = rgb(ffb3ac)
+$secondary             = rgb(e7bdb8)
+$on_secondary_container = rgb(ffdad6)
+$source_color          = rgb(73332f)

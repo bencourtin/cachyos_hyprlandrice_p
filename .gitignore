@@ -1,0 +1,24 @@
+# matugen-generated color files (regenerated from the wallpaper on first run).
+# install.sh seeds each one from its committed *.default sibling.
+config/hypr/config/colors-matugen.lua
+config/hypr/hyprlock-colors.conf
+config/waybar/colors.css
+config/rofi/colors.rasi
+config/quickshell/clima/colors.json
+config/quickshell/mediactl/colors.json
+config/quickshell/keyhints/colors.json
+config/cava/config
+config/wlogout/colors.css
+config/swaync/colors.css
+config/gtk-3.0/matugen.css
+config/gtk-4.0/matugen.css
+config/kitty/matugen.conf
+config/btop/themes/matugen.theme
+
+# editor / OS noise
+*.swp
+*~
+.DS_Store
+
+# runtime state written by wallpaper.sh
+config/hypr/current_wallpaper

@@ -1,0 +1,25 @@
+-- Generado por matugen — NO EDITAR
+-- Consumido por config/colors.lua (overlay sobre el fallback)
+
+-- Nombres heredados CachyOS (los usa decorations.lua / misc.lua)
+CACHYLGREEN = "rgba(ffb3acff)"
+CACHYMGREEN = "rgba(e7bdb8ff)"
+CACHYDGREEN = "rgba(73332fff)"
+CACHYLBLUE  = "rgba(e1c38cff)"
+CACHYMBLUE  = "rgba(5d3f3cff)"
+CACHYDBLUE  = "rgba(322827ff)"
+CACHYWHITE  = "rgba(f1dedcff)"
+CACHYGREY   = "rgba(d8c2bfff)"
+CACHYGRAY   = "rgba(a08c8aff)"
+
+-- Nombres semánticos Material You (para uso futuro)
+M3_PRIMARY            = "rgba(ffb3acff)"
+M3_ON_PRIMARY         = "rgba(571e1aff)"
+M3_PRIMARY_CONTAINER  = "rgba(73332fff)"
+M3_SECONDARY          = "rgba(e7bdb8ff)"
+M3_TERTIARY           = "rgba(e1c38cff)"
+M3_ERROR              = "rgba(ffb4abff)"
+M3_SURFACE            = "rgba(1a1110ff)"
+M3_ON_SURFACE         = "rgba(f1dedcff)"
+M3_SURFACE_CONTAINER  = "rgba(271d1cff)"
+M3_OUTLINE            = "rgba(a08c8aff)"
