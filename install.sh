@@ -63,7 +63,9 @@ backup() { # $1 = absolute path to move aside, $2 = repo-relative name
 }
 
 link() { # $1 = repo-relative path (file or dir)
-  local rel="$1" src="$SRC/$rel" tgt="$DST/$rel"
+  local rel="$1"
+  local src="$SRC/$rel"
+  local tgt="$DST/$rel"
   [ -e "$src" ] || { say "  ! missing in repo: $rel (skipped)"; return 0; }
   if same_target "$tgt" "$src"; then say "  = $rel"; return 0; fi
   run "mkdir -p \"$(dirname "$tgt")\""
