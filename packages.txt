@@ -44,6 +44,17 @@ brightnessctl
 playerctl
 fish
 
+# --- yazi: Finder-like terminal file manager (SUPER+E) + preview deps ---
+yazi
+resvg                      # SVG previews
+ffmpeg                     # video / audio thumbnails
+7zip                       # archive preview + extract
+poppler                    # PDF previews
+fd                         # file search
+ripgrep                    # content search
+fzf                        # interactive jump
+zoxide                     # smart cd (`z`)
+
 # --- Audio ---
 pipewire
 pipewire-pulse

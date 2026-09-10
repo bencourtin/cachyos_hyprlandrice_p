@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Yazi
+GenericName=File Manager
+Comment=Blazing fast terminal file manager
+Exec=kitty --class yazi -e yazi %U
+Terminal=false
+Icon=system-file-manager
+Categories=Utility;Core;FileManager;
+MimeType=inode/directory;
+Keywords=File;Manager;Explorer;Finder;
+StartupNotify=false
+StartupWMClass=yazi

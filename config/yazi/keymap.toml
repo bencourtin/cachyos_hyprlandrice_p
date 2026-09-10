@@ -1,0 +1,18 @@
+# ~/.config/yazi/keymap.toml — Finder muscle memory on top of yazi's defaults.
+# prepend_keymap wins over the builtin bindings; everything else stays.
+
+[mgr]
+prepend_keymap = [
+  { on = [ "<Left>" ],      run = "leave", desc = "Parent directory" },
+  { on = [ "<Backspace>" ], run = "leave", desc = "Parent directory" },
+  { on = [ "<Right>" ],     run = "enter", desc = "Enter directory" },
+  { on = [ "<Enter>" ],     run = "open",  desc = "Open" },
+  { on = [ "<Space>" ],     run = [ "toggle", "arrow 1" ], desc = "Select + move down" },
+
+  { on = [ "." ],           run = "hidden toggle", desc = "Toggle hidden files" },
+  { on = [ "<C-c>" ],       run = "copy path",     desc = "Copy full path" },
+  { on = [ "g", "h" ],      run = "cd ~",          desc = "Go home" },
+
+  { on = [ "<Esc>" ],       run = "escape", desc = "Clear selection / search / visual" },
+  { on = [ "q" ],           run = "quit",   desc = "Quit" },
+]

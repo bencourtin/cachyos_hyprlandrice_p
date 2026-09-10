@@ -25,6 +25,7 @@ How the pieces are wired. Paths are under `~/.config` unless noted.
 | `kitty-colors.conf` | `kitty/matugen.conf` (`post_hook: kill -SIGUSR1 kitty`) |
 | `gtk-colors.css` | `gtk-3.0/matugen.css`, `gtk-4.0/matugen.css` |
 | `btop.theme` / `cava.conf` | `btop/themes/matugen.theme` / `cava/config` |
+| `yazi-theme.toml` | `yazi/theme.toml` (no hook — yazi re-reads on launch) |
 | `spicetify-colors.ini` | `spicetify/Themes/text/color.ini` (`post_hook: spicetify refresh`) |
 | `discord-vencord.css` | `Vencord/themes/matugen.css` |
 
@@ -121,6 +122,31 @@ descriptions with section headers.
 Needs `WlrKeyboardFocus.Exclusive` to type into the search box, which means
 **`SUPER+K` no longer closes it** (Hyprland never sees the key) — close with
 **Esc** or click outside.
+
+## File manager (yazi)
+
+A terminal file manager with Finder-style Miller columns (parent │ current │
+preview) and Quick Look-ish previews (images/video/PDF/archives rendered in
+kitty's graphics protocol).
+
+- **`SUPER+E`** → `FILE_MANAGER` in `hypr/config/variables.lua` =
+  `kitty --class yazi -e yazi`. `windowrules.lua` floats & centers the `yazi`
+  class at ~62%×68% and gives it the same translucency as the other file
+  managers.
+- Config in `yazi/`: `yazi.toml` (`ratio = [1,3,4]`, dirs-first, hidden files
+  off, `linemode = size`, openers → `micro` / `xdg-open` / `mpv`),
+  `keymap.toml` (Finder muscle memory prepended: `←`/`Backspace` up, `→` enter,
+  `Enter` open, `Space` select+down, `.` toggle hidden, `Ctrl+C` copy path).
+- `theme.toml` is matugen-generated from `matugen/templates/yazi-theme.toml`;
+  `theme.toml.default` (CachyOS teal/blue) seeds it pre-matugen and is
+  gitignored like the other generated color files.
+- `fish/conf.d/yazi.fish` defines `y` — the official wrapper that `cd`s the
+  shell to wherever you left yazi.
+- `local/share/applications/yazi.desktop` exists so yazi shows up in app
+  menus, but Dolphin stays the `inode/directory` handler (a TUI is a poor GUI
+  default). To switch: `xdg-mime default yazi.desktop inode/directory`.
+- Preview deps: `ffmpeg`, `7zip`, `poppler`, `resvg`, `imagemagick`; nav helpers
+  `fd`, `ripgrep`, `fzf`, `zoxide`.
 
 ## Wallpaper picker
 

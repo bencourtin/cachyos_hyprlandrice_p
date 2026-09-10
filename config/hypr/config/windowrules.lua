@@ -67,6 +67,14 @@ hl.window_rule({
     },
 })
 
+-- Yazi (kitty --class yazi) — Finder-like floating window
+hl.window_rule({
+    match  = { class = "^(yazi)$" },
+    float  = true,
+    center = true,
+    size   = { "max(monitor_w, monitor_h)*0.62", "min(monitor_w, monitor_h)*0.68" },
+})
+
 -- Opacity Overrides
 local terminals = "^(kitty|ghostty|[Kk]onsole|Alacritty|gnome-terminal|xfce[0-9]?-terminal)$"
 
@@ -78,7 +86,7 @@ hl.window_rule({ match = { class = "^(mpv|org.kde.haruna|.*plex.*|org\\.kde\\.gw
 hl.window_rule({ match = { class = "^(discord|vesktop|WebCord|legcord|ArmCord|org\\.telegram\\.desktop|Signal)$" }, opacity = "0.94 override 0.86 override 1.0 override" })
 hl.window_rule({ match = { class = "^([Ss]potify)$" }, opacity = "0.86 override 0.76 override 1.0 override" })
 hl.window_rule({ match = { class = "^(org\\.pulseaudio\\.pavucontrol|blueman-manager|nwg-look|qt[56]ct|kvantummanager)$" }, opacity = "0.92 override 0.86 override 1.0 override" })
-hl.window_rule({ match = { class = "^(org\\.kde\\.dolphin|org\\.gnome\\.Nautilus|thunar|nemo)$" }, opacity = "0.95 override 0.88 override 1.0 override" })
+hl.window_rule({ match = { class = "^(org\\.kde\\.dolphin|org\\.gnome\\.Nautilus|thunar|nemo|yazi)$" }, opacity = "0.95 override 0.88 override 1.0 override" })
 
 -- Layer rules: blur para el shell (waybar / swaync / rofi / wlogout)
 hl.layer_rule({ match = { namespace = "^waybar$" }, blur = true, ignore_alpha = 0.4, xray = true })

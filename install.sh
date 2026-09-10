@@ -17,7 +17,7 @@ DRY=0
 [ "${1:-}" = "--dry" ] && DRY=1
 
 # Whole directories that are 100% part of the rice -> one symlink each.
-DIR_LINKS=(hypr waybar quickshell matugen rofi swaync wlogout cava uwsm)
+DIR_LINKS=(hypr waybar quickshell matugen rofi swaync wlogout cava uwsm yazi)
 
 # Individual files inside directories shared with non-rice config -> file symlinks.
 FILE_LINKS=(
@@ -25,10 +25,16 @@ FILE_LINKS=(
   gtk-3.0/settings.ini
   gtk-4.0/gtk.css
   fish/config.fish
+  fish/conf.d/yazi.fish
   kitty/kitty.conf
   alacritty/alacritty.toml
   alacritty/themes/noctalia.toml
   btop/btop.conf
+)
+
+# Files under ~/.local (not ~/.config). rel path is under repo ./local/ and ~/.local/.
+DATA_LINKS=(
+  share/applications/yazi.desktop
 )
 
 # matugen writes these; they are gitignored. Seed from *.default when absent so
@@ -44,6 +50,7 @@ DEFAULTS=(
   cava/config
   wlogout/colors.css
   swaync/colors.css
+  yazi/theme.toml
   gtk-3.0/matugen.css
   gtk-4.0/matugen.css
   kitty/matugen.conf
@@ -62,10 +69,10 @@ backup() { # $1 = absolute path to move aside, $2 = repo-relative name
   say "  ~ backed up $rel -> $BACKUP/$rel"
 }
 
-link() { # $1 = repo-relative path (file or dir)
+link() { # $1 = repo-relative path (file or dir); $2/$3 = src/dst roots (default config)
   local rel="$1"
-  local src="$SRC/$rel"
-  local tgt="$DST/$rel"
+  local src="${2:-$SRC}/$rel"
+  local tgt="${3:-$DST}/$rel"
   [ -e "$src" ] || { say "  ! missing in repo: $rel (skipped)"; return 0; }
   if same_target "$tgt" "$src"; then say "  = $rel"; return 0; fi
   run "mkdir -p \"$(dirname "$tgt")\""
@@ -95,6 +102,10 @@ for d in "${DIR_LINKS[@]}"; do link "$d"; done
 say ""
 say "linking individual files:"
 for f in "${FILE_LINKS[@]}"; do link "$f"; done
+
+say ""
+say "linking ~/.local files:"
+for f in "${DATA_LINKS[@]}"; do link "$f" "$REPO_DIR/local" "$HOME/.local"; done
 
 say ""
 say "done."

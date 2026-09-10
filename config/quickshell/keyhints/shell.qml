@@ -72,7 +72,7 @@ PanelWindow {
         { title: "Lanzar apps", items: [
             { k: "SUPER + Return",        d: "Terminal (kitty)" },
             { k: "SUPER + Space",         d: "Launcher de apps (rofi)" },
-            { k: "SUPER + E",             d: "Archivos (dolphin)" },
+            { k: "SUPER + E",             d: "Archivos (yazi)" },
             { k: "SUPER + W",             d: "Navegador (firefox)" },
             { k: "SUPER + T",             d: "Editor de texto" },
             { k: "SUPER + C",             d: "Calculadora" },

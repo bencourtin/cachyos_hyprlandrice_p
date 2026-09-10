@@ -1,0 +1,87 @@
+# yazi/theme.toml — fallback palette (CachyOS teal/blue).
+# install.sh seeds theme.toml from this; matugen overwrites theme.toml on the
+# first `wallpaper.sh` run. This file is only the pre-matugen default.
+
+[mgr]
+cwd = { fg = "#82dccc" }
+
+hovered         = { fg = "#111826", bg = "#82dccc" }
+preview_hovered = { underline = true }
+
+find_keyword  = { fg = "#01ccff", bold = true, italic = true }
+find_position = { fg = "#aab3bd", bg = "reset", bold = true, italic = true }
+
+marker_copied   = { fg = "#01ccff", bg = "#01ccff" }
+marker_cut      = { fg = "#ffb4ab", bg = "#ffb4ab" }
+marker_marked   = { fg = "#82dccc", bg = "#82dccc" }
+marker_selected = { fg = "#82dccc", bg = "#82dccc" }
+
+count_copied   = { fg = "#111826", bg = "#01ccff" }
+count_cut      = { fg = "#111826", bg = "#ffb4ab" }
+count_selected = { fg = "#111826", bg = "#82dccc" }
+
+border_symbol = "│"
+border_style  = { fg = "#40484c" }
+
+syntect_theme = ""
+
+[mode]
+normal_main = { fg = "#111826", bg = "#82dccc", bold = true }
+normal_alt  = { fg = "#82dccc", bg = "#182545" }
+select_main = { fg = "#111826", bg = "#01ccff", bold = true }
+select_alt  = { fg = "#01ccff", bg = "#182545" }
+unset_main  = { fg = "#111826", bg = "#ffb4ab", bold = true }
+unset_alt   = { fg = "#ffb4ab", bg = "#182545" }
+
+[status]
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+perm_type  = { fg = "#82dccc" }
+perm_read  = { fg = "#01ccff" }
+perm_write = { fg = "#ffb4ab" }
+perm_exec  = { fg = "#798bb2" }
+perm_sep   = { fg = "#aab3bd" }
+
+[pick]
+border   = { fg = "#82dccc" }
+active   = { fg = "#01ccff", bold = true }
+inactive = {}
+
+[input]
+border   = { fg = "#82dccc" }
+title    = {}
+value    = {}
+selected = { bg = "#1e2b4d" }
+
+[confirm]
+border  = { fg = "#82dccc" }
+title   = { fg = "#82dccc" }
+content = {}
+list    = {}
+btn_yes = { fg = "#111826", bg = "#82dccc" }
+btn_no  = {}
+
+[which]
+mask            = { bg = "#182545" }
+cand            = { fg = "#01ccff" }
+rest            = { fg = "#aab3bd" }
+desc            = { fg = "#82dccc" }
+separator       = "  "
+separator_style = { fg = "#40484c" }
+
+[notify]
+title_info  = { fg = "#01ccff" }
+title_warn  = { fg = "#798bb2" }
+title_error = { fg = "#ffb4ab" }
+
+[filetype]
+rules = [
+  { mime = "image/*",         fg = "#01ccff" },
+  { mime = "{audio,video}/*", fg = "#798bb2" },
+  { mime = "application/*zip", fg = "#ffb4ab" },
+  { mime = "application/x-{tar,bzip2,7z-compressed,xz,rar}", fg = "#ffb4ab" },
+  { name = "*", is = "orphan", fg = "#ffb4ab" },
+  { name = "*", is = "exec",   fg = "#798bb2" },
+  { name = "*/", fg = "#82dccc" },
+]

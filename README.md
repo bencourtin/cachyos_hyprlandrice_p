@@ -24,6 +24,7 @@ programs; the rest is waybar + the usual Hyprland ecosystem.
 | Wallpaper | `awww` (CachyOS' renamed `swww`) |
 | Notifications | swaync |
 | Launcher / menus | rofi |
+| File manager | yazi (Finder-like columns + preview, in kitty) |
 | Lock / idle | hyprlock + hypridle |
 | Session menu | wlogout (`SUPER+ALT+C`) |
 | OSD | swayosd |
@@ -76,6 +77,7 @@ Press **`SUPER+K`** for the full searchable cheatsheet (it mirrors
 | Key | Action |
 | --- | --- |
 | `SUPER+Space` | rofi launcher |
+| `SUPER+E` | file manager — yazi in a floating kitty |
 | `SUPER+SHIFT+W` | wallpaper dock (Quickshell) · `SUPER+ALT+W` rofi fallback |
 | `SUPER+ALT+C` | session menu (wlogout) |
 | `SUPER+K` | keybind cheatsheet |
@@ -92,9 +94,11 @@ config/            mirrors ~/.config
   waybar/          configs/, style/, Modules*
   quickshell/      clima · mediactl · keyhints · hyprquickpaper
   matugen/         config.toml + templates/
+  yazi/            yazi.toml, keymap.toml, theme.toml (matugen)
   rofi swaync wlogout cava uwsm
   gtk-3.0 gtk-4.0 fish kitty alacritty btop   (selected files)
   *.default        seed copies of matugen-generated color files
+local/share/applications/yazi.desktop
 install.sh  uninstall.sh  packages.txt
 docs/architecture.md   how each piece is wired
 ```

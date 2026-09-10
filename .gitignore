@@ -10,6 +10,7 @@ config/quickshell/keyhints/colors.json
 config/cava/config
 config/wlogout/colors.css
 config/swaync/colors.css
+config/yazi/theme.toml
 config/gtk-3.0/matugen.css
 config/gtk-4.0/matugen.css
 config/kitty/matugen.conf

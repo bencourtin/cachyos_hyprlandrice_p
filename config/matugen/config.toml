@@ -75,3 +75,8 @@ output_path = '~/.config/wlogout/colors.css'
 input_path  = '~/.config/matugen/templates/waybar-colors.css'
 output_path = '~/.config/swaync/colors.css'
 post_hook   = 'swaync-client -rs 2>/dev/null || true'
+
+[templates.yazi]
+input_path  = '~/.config/matugen/templates/yazi-theme.toml'
+output_path = '~/.config/yazi/theme.toml'
+# yazi reads theme.toml fresh on each launch; no reload hook needed.
