@@ -37,7 +37,9 @@ output_path = '~/.config/quickshell/keyhints/colors.json'
 [templates.spicetify]
 input_path  = '~/.config/matugen/templates/spicetify-colors.ini'
 output_path = '~/.config/spicetify/Themes/text/color.ini'
-post_hook   = 'spicetify apply >/dev/null 2>&1 || true'
+# `refresh` hot-reloads color.ini/CSS into the running client; `apply` would
+# re-inject and restart Spotify on every wallpaper change.
+post_hook   = 'spicetify refresh >/dev/null 2>&1 || true'
 
 [templates.discord]
 input_path  = '~/.config/matugen/templates/discord-vencord.css'

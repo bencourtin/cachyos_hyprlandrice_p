@@ -25,7 +25,7 @@ How the pieces are wired. Paths are under `~/.config` unless noted.
 | `kitty-colors.conf` | `kitty/matugen.conf` (`post_hook: kill -SIGUSR1 kitty`) |
 | `gtk-colors.css` | `gtk-3.0/matugen.css`, `gtk-4.0/matugen.css` |
 | `btop.theme` / `cava.conf` | `btop/themes/matugen.theme` / `cava/config` |
-| `spicetify-colors.ini` | `spicetify/Themes/text/color.ini` (`post_hook: spicetify apply`) |
+| `spicetify-colors.ini` | `spicetify/Themes/text/color.ini` (`post_hook: spicetify refresh`) |
 | `discord-vencord.css` | `Vencord/themes/matugen.css` |
 
 - `config.toml` needs a `[config]` header (even empty) and matugen must be
@@ -162,8 +162,10 @@ Both follow the wallpaper through matugen templates.
 
 - **spicetify:** template → `spicetify/Themes/text/color.ini` (sections
   `[Matugen]` + a static `[Monochrome]` fallback). `config-xpui.ini` →
-  `color_scheme = Matugen`. `post_hook = spicetify apply` hot-reloads a running
-  Spotify. After every Spotify update: `spicetify backup apply`.
+  `color_scheme = Matugen`. `post_hook = spicetify refresh` hot-reloads
+  `color.ini` into the running client with no restart — `spicetify apply` would
+  re-inject and bounce Spotify on every wallpaper change. After a Spotify
+  update, run `spicetify backup apply` once by hand.
 - **Discord = Vencord:** official `discord` package, vanilla. Template →
   `Vencord/themes/matugen.css` (overrides `--background-*`, `--bg-base-*`,
   `--text-*`, `--brand-500`, scrollbars…). No post-hook (Vencord watches the
