@@ -5,6 +5,7 @@ config/hypr/hyprlock-colors.conf
 config/waybar/colors.css
 config/rofi/colors.rasi
 config/quickshell/clima/colors.json
+config/quickshell/calendario/colors.json
 config/quickshell/mediactl/colors.json
 config/quickshell/keyhints/colors.json
 config/cava/config
@@ -15,6 +16,14 @@ config/gtk-3.0/matugen.css
 config/gtk-4.0/matugen.css
 config/kitty/matugen.conf
 config/btop/themes/matugen.theme
+config/quickshell/mixerctl/colors.json
+config/quickshell/netmon/colors.json
+
+# fcitx5 regenerates this by scanning /usr/share/xkeyboard-config-2 on first run
+config/fcitx5/conf/cached_layouts
+
+# stray manual backups, not meant to be tracked
+config/wlogout/layout.bak.*
 
 # editor / OS noise
 *.swp

@@ -67,6 +67,19 @@ hl.window_rule({
     },
 })
 
+hl.window_rule({
+    match = {
+        class = "^(org\\.gnome\\.Nautilus)$",
+        title = "negative:^(Copying.*|Moving.*|Extract.*|Compress.*|Create.*|Rename.*|Properties.*|Open With.*)$",
+    },
+    float = true,
+    size = { "max(monitor_w, monitor_h)*0.50", "min(monitor_w, monitor_h)*0.55" },
+    move = {
+        "max(20, min(cursor_x - (window_w*0.50), monitor_w - window_w + 20))", -- X axis clamping
+        "max(20, min(cursor_y - 50, monitor_h - window_h + 20))" -- Y axis clamping
+    },
+})
+
 -- Yazi (kitty --class yazi) — Finder-like floating window
 hl.window_rule({
     match  = { class = "^(yazi)$" },
@@ -84,16 +97,17 @@ hl.window_rule({ match = { class = "^(mpv|org.kde.haruna|.*plex.*|org\\.kde\\.gw
 
 -- Rice translucency (chat / música / utilidades) — portado de arch-hyprland, suavizado
 hl.window_rule({ match = { class = "^(discord|vesktop|WebCord|legcord|ArmCord|org\\.telegram\\.desktop|Signal)$" }, opacity = "0.94 override 0.86 override 1.0 override" })
-hl.window_rule({ match = { class = "^([Ss]potify)$" }, opacity = "0.86 override 0.76 override 1.0 override" })
+hl.window_rule({ match = { class = "^([Ss]potify)$" }, opacity = "0.78 override 0.68 override 1.0 override" })
 hl.window_rule({ match = { class = "^(org\\.pulseaudio\\.pavucontrol|blueman-manager|nwg-look|qt[56]ct|kvantummanager)$" }, opacity = "0.92 override 0.86 override 1.0 override" })
-hl.window_rule({ match = { class = "^(org\\.kde\\.dolphin|org\\.gnome\\.Nautilus|thunar|nemo|yazi)$" }, opacity = "0.95 override 0.88 override 1.0 override" })
+hl.window_rule({ match = { class = "^(org\\.kde\\.dolphin|thunar|nemo|yazi)$" }, opacity = "0.95 override 0.88 override 1.0 override" })
 
 -- Layer rules: blur para el shell (waybar / swaync / rofi / wlogout)
+-- ignore_alpha bajo => se difuminan también los píxeles muy translúcidos del menú (liquid glass)
 hl.layer_rule({ match = { namespace = "^waybar$" }, blur = true, ignore_alpha = 0.4, xray = true })
-hl.layer_rule({ match = { namespace = "^swaync-control-center$" }, blur = true, ignore_alpha = 0.5, xray = false })
-hl.layer_rule({ match = { namespace = "^swaync-notification-window$" }, blur = true, ignore_alpha = 0.5, xray = false })
-hl.layer_rule({ match = { namespace = "^rofi$" }, blur = true, ignore_alpha = 0.3, xray = false })
-hl.layer_rule({ match = { namespace = "^logout_dialog$" }, blur = true })
+hl.layer_rule({ match = { namespace = "^swaync-control-center$" }, blur = true, ignore_alpha = 0.2, xray = false })
+hl.layer_rule({ match = { namespace = "^swaync-notification-window$" }, blur = true, ignore_alpha = 0.2, xray = false })
+hl.layer_rule({ match = { namespace = "^rofi$" }, blur = true, ignore_alpha = 0.2, xray = false })
+hl.layer_rule({ match = { namespace = "^logout_dialog$" }, blur = true, ignore_alpha = 0.2, xray = false })
 
 -- Float Utility Windows
 local floatApps = {

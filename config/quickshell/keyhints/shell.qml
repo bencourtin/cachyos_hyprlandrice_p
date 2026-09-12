@@ -86,12 +86,11 @@ PanelWindow {
             { k: "SUPER + ALT + C",       d: "Menú de sesión (wlogout)" },
             { k: "SUPER + X",             d: "Centro de notificaciones" },
             { k: "SUPER + A",             d: "No molestar on/off" },
+            { k: "ALT + SHIFT + Space",   d: "Ciclar teclado: EN → ES latam → 中文 (pinyin)" },
         ]},
         { title: "Escritorios", items: [
-            { k: "SUPER + SHIFT + 1…0",   d: "Ir al escritorio 1–10" },
-            { k: "SUPER + ALT + 1…5",     d: "Ir al escritorio (absoluto)" },
-            { k: "SUPER + CONTROL + 1…5", d: "Ir al escritorio (del monitor)" },
-            { k: "SUPER + SHIFT + CONTROL + 1…0", d: "Llevar la ventana al escritorio N" },
+            { k: "SUPER + 1…0",           d: "Ir al escritorio 1–10" },
+            { k: "SUPER + SHIFT + 1…0",   d: "Llevar la ventana al escritorio N" },
             { k: "SUPER + CONTROL + ← →", d: "Escritorio anterior / siguiente" },
             { k: "SUPER + CONTROL + ↓",   d: "Siguiente escritorio vacío" },
             { k: "SUPER + scroll",        d: "Cambiar de escritorio" },
@@ -106,11 +105,15 @@ PanelWindow {
         { title: "Fondo / tema", items: [
             { k: "SUPER + SHIFT + W",     d: "Selector visual de wallpaper" },
             { k: "SUPER + ALT + W",       d: "Selector de wallpaper (rofi)" },
+            { k: "SUPER + SHIFT + ] / [", d: "Ciclar shader de pantalla" },
+            { k: "SUPER + SHIFT + \\",    d: "Quitar shader de pantalla" },
+            { k: "SUPER + ALT + S",       d: "Menú de shaders (ver / crear / editar)" },
         ]},
         { title: "Multimedia", items: [
             { k: "Vol +/− / Mute",        d: "Volumen (swayosd)" },
             { k: "Play · Next · Prev",    d: "Control de reproducción" },
             { k: "Brillo +/−",            d: "Brillo (swayosd)" },
+            { k: "SUPER + SHIFT + N",     d: "Luz nocturna on/off (auto solar)" },
         ]},
     ]
 
@@ -323,11 +326,16 @@ PanelWindow {
                                         RowLayout {
                                             id: elrow
                                             anchors { fill: parent; leftMargin: 12; rightMargin: 14; topMargin: 9; bottomMargin: 9 }
-                                            spacing: 16
+                                            spacing: 20
 
-                                            RowLayout {
-                                                spacing: 4
+                                            // ----- columna izquierda: teclas (ancho fijo) -----
+                                            Flow {
+                                                id: keyCol
+                                                Layout.preferredWidth: 250
+                                                Layout.minimumWidth: 250
+                                                Layout.maximumWidth: 250
                                                 Layout.alignment: Qt.AlignVCenter
+                                                spacing: 4
                                                 Repeater {
                                                     model: modelData.k.split(" + ")
                                                     delegate: Rectangle {
@@ -351,12 +359,16 @@ PanelWindow {
                                                 }
                                             }
 
+                                            // ----- columna derecha: descripción alineada -----
                                             Text {
                                                 text: modelData.d
                                                 color: elh.hovered ? c.selFg : c.fg
                                                 font.pixelSize: 15
                                                 font.family: "JetBrainsMono Nerd Font"
                                                 Layout.fillWidth: true
+                                                Layout.alignment: Qt.AlignVCenter
+                                                horizontalAlignment: Text.AlignLeft
+                                                wrapMode: Text.WordWrap
                                                 elide: Text.ElideRight
                                             }
                                         }

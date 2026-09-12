@@ -1,0 +1,9 @@
+[Added Associations]
+
+[Default Applications]
+inode/directory=yazi.desktop
+text/plain=org.gnome.TextEditor.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+application/x-directory=yazi.desktop

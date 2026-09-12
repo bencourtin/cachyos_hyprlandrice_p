@@ -31,7 +31,7 @@ play = [
 
 [open]
 rules = [
-  { name = "*/",                                            use = [ "edit", "open" ] },
+  { url = "*/",                                             use = [ "edit", "open" ] },
   { mime = "text/*",                                        use = [ "edit", "open" ] },
   { mime = "image/*",                                       use = [ "open" ] },
   { mime = "{audio,video}/*",                               use = [ "play", "open" ] },

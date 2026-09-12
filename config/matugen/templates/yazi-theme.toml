@@ -80,7 +80,7 @@ rules = [
   { mime = "{audio,video}/*", fg = "{{colors.secondary.default.hex}}" },
   { mime = "application/*zip", fg = "{{colors.error.default.hex}}" },
   { mime = "application/x-{tar,bzip2,7z-compressed,xz,rar}", fg = "{{colors.error.default.hex}}" },
-  { name = "*", is = "orphan", fg = "{{colors.error.default.hex}}" },
-  { name = "*", is = "exec",   fg = "{{colors.secondary.default.hex}}" },
-  { name = "*/", fg = "{{colors.primary.default.hex}}" },
+  { url = "*", is = "orphan", fg = "{{colors.error.default.hex}}" },
+  { url = "*", is = "exec",   fg = "{{colors.secondary.default.hex}}" },
+  { url = "*/", fg = "{{colors.primary.default.hex}}" },
 ]

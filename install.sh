@@ -45,6 +45,7 @@ DEFAULTS=(
   waybar/colors.css
   rofi/colors.rasi
   quickshell/clima/colors.json
+  quickshell/calendario/colors.json
   quickshell/mediactl/colors.json
   quickshell/keyhints/colors.json
   cava/config

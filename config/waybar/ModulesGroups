@@ -71,8 +71,7 @@
 		"transition-left-to-right": true
         },
 	"modules": [
-		"pulseaudio",
-		"pulseaudio#microphone",
+		"pulseaudio"
 	]
 },
 

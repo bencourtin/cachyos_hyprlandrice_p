@@ -7,7 +7,8 @@
 [templates.hyprland]
 input_path  = '~/.config/matugen/templates/hypr-colors.lua'
 output_path = '~/.config/hypr/config/colors-matugen.lua'
-post_hook   = 'hyprctl reload'
+# `hyprctl reload` borra decoration:screen_shader -> re-aplicar el perfil activo.
+post_hook   = 'hyprctl reload && $HOME/.config/hypr/scripts/ShaderCycle.sh restore'
 
 [templates.hyprlock]
 input_path  = '~/.config/matugen/templates/hyprlock-colors.conf'
@@ -26,9 +27,21 @@ output_path = '~/.config/rofi/colors.rasi'
 input_path  = '~/.config/matugen/templates/clima-colors.json'
 output_path = '~/.config/quickshell/clima/colors.json'
 
+[templates.calendario]
+input_path  = '~/.config/matugen/templates/calendario-colors.json'
+output_path = '~/.config/quickshell/calendario/colors.json'
+
 [templates.mediactl]
 input_path  = '~/.config/matugen/templates/mediactl-colors.json'
 output_path = '~/.config/quickshell/mediactl/colors.json'
+
+[templates.mixerctl]
+input_path  = '~/.config/matugen/templates/mixerctl-colors.json'
+output_path = '~/.config/quickshell/mixerctl/colors.json'
+
+[templates.netmon]
+input_path  = '~/.config/matugen/templates/netmon-colors.json'
+output_path = '~/.config/quickshell/netmon/colors.json'
 
 [templates.keyhints]
 input_path  = '~/.config/matugen/templates/keyhints-colors.json'
@@ -40,10 +53,6 @@ output_path = '~/.config/spicetify/Themes/text/color.ini'
 # `refresh` hot-reloads color.ini/CSS into the running client; `apply` would
 # re-inject and restart Spotify on every wallpaper change.
 post_hook   = 'spicetify refresh >/dev/null 2>&1 || true'
-
-[templates.discord]
-input_path  = '~/.config/matugen/templates/discord-vencord.css'
-output_path = '~/.config/Vencord/themes/matugen.css'
 
 [templates.kitty]
 input_path  = '~/.config/matugen/templates/kitty-colors.conf'

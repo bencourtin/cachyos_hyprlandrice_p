@@ -28,7 +28,7 @@ window {
     border-color:		 @secondary-container;
     border-radius:               15px;
     cursor:                      "default";
-    background-color:            @on-primary-fixed;
+    background-color:            @on-primary-fixed-trans;
 }
 
 mainbox {

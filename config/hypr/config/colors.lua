@@ -15,4 +15,4 @@ CACHYGREY   = "rgba(ddddddff)"
 CACHYGRAY   = "rgba(798bb2ff)"
 
 -- === Overlay matugen (Material You desde wallpaper) ===
-pcall(dofile, (os.getenv("HOME") or "~") .. "/.config/hypr/config/colors-matugen.lua")
+pcall(dofile, "/home/bcourtin/.config/hypr/config/colors-matugen.lua")

@@ -8,6 +8,13 @@ export HYPRCURSOR_SIZE=24
 export XCURSOR_THEME="Bibata-Modern-Ice"
 export XCURSOR_SIZE=24
 
+# fcitx5 (input method: teclado ES latam / EN / chino pinyin, SUPER... ver KeyboardLayout.sh)
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+export INPUT_METHOD=fcitx
+
 # If you have an NVIDIA GPU uncommment the following lines
 # export GBM_BACKEND=nvidia-drm # force GBM as a backend
 # export __GLX_VENDOR_LIBRARY_NAME=nvidia # force GBM as a backend

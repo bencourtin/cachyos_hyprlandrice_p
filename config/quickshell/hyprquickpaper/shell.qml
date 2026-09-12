@@ -259,7 +259,7 @@ PanelWindow {
                 break
             case Qt.Key_W:
                 Qt.quit()
-                break    
+                break
             case Qt.Key_Escape:
                 Qt.quit()
                 break

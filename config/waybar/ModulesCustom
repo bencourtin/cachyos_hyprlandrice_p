@@ -193,6 +193,30 @@
 	"tooltip-format":"Logout Menu",
 },
 
+// Actualizaciones pendientes (pacman + AUR vía paru). Vacío = al día,
+// waybar colapsa el módulo solo. Click = terminal con pacman -Syu (+ paru).
+"custom/updates": {
+	"exec": "$HOME/.config/hypr/scripts/SystemUpdate.sh status",
+	"return-type": "json",
+	"interval": 1800,
+	"format": "{}",
+	"on-click": "$HOME/.config/hypr/scripts/SystemUpdate.sh apply",
+	"tooltip": true,
+},
+
+// Layout de teclado activo (EN / ES latam / 中文 pinyin vía fcitx5, ver
+// KeyboardLayout.sh). "signal":9 = refresco instantáneo al cambiar (el
+// script manda pkill -RTMIN+9 waybar), el interval es sólo respaldo.
+"custom/kblayout": {
+	"exec": "$HOME/.config/hypr/scripts/KeyboardLayout.sh label",
+	"interval": 3600,
+	"signal": 9,
+	"format": "󰌌 {}",
+	"on-click": "$HOME/.config/hypr/scripts/KeyboardLayout.sh cycle",
+	"tooltip": true,
+	"tooltip-format": "Teclado — click para cambiar (EN → ES latam → 中文)",
+},
+
 "custom/reboot": {
     "format": "󰜉",
     "on-click": "systemctl reboot",

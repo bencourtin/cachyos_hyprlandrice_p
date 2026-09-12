@@ -21,6 +21,7 @@ rofi                       # rofi-wayland
 swaync                     # notifications
 wlogout                    # session menu (SUPER+ALT+C)
 swayosd                    # volume / brightness OSD
+hyprsunset                 # night light — DarkLight.sh auto solar schedule (SUPER+SHIFT+N)
 
 # --- Theming engine ---
 matugen                    # Material You colors from the wallpaper

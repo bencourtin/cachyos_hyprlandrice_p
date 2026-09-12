@@ -34,13 +34,23 @@ hl.config({
     decoration = {
         dim_special = 0.3,
         rounding = 10,
-        active_opacity = 0.95,
-        inactive_opacity = 0.85,
+        active_opacity = 0.92,
+        inactive_opacity = 0.80,
         fullscreen_opacity = 1,
         blur = {
-            size = 5,
+            enabled = true,
+            size = 6,
             passes = 4,
+            ignore_opacity = true,   -- blur también detrás de píxeles opacos -> vidrio más marcado
+            new_optimizations = true,
+            xray = false,            -- true = difumina solo el wallpaper (ignora ventanas de atrás)
+            noise = 0.012,
+            contrast = 1.1,
+            brightness = 1.0,
+            vibrancy = 0.1696,       -- satura los colores que pasan por el blur (efecto "liquid glass")
+            vibrancy_darkness = 0.0,
             special = true,
+            popups = true,           -- difumina también popups/menús contextuales
         },
     },
 })

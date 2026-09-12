@@ -27,7 +27,7 @@ hl.bind(mainMod .. " + SHIFT + Right",                hl.dsp.window.move({ direc
 hl.bind(mainMod .. " + SHIFT + Left",                 hl.dsp.window.move({ direction = "l" }))
 hl.bind(mainMod .. " + SHIFT + Down",                 hl.dsp.window.move({ direction = "d" }))
 -- SUPER + SHIFT + 1/2/3 = mover ventana entre monitores (deshabilitado: setup de 1 monitor;
--- esas teclas ahora cambian de escritorio, ver sección WORKSPACES abajo).
+-- esas teclas ahora mueven la ventana activa a ese escritorio, ver el loop de abajo).
 -- hl.bind(mainMod .. " + SHIFT + 1", hl.dsp.window.move({ monitor = MONITOR1 }))
 -- hl.bind(mainMod .. " + SHIFT + 2", hl.dsp.window.move({ monitor = MONITOR2 }))
 -- hl.bind(mainMod .. " + SHIFT + 3", hl.dsp.window.move({ monitor = MONITOR3 }))
@@ -37,10 +37,11 @@ hl.bind(mainMod .. " + CONTROL + SHIFT + Right",      hl.dsp.window.move({ works
 hl.bind(mainMod .. " + CONTROL + SHIFT + Left",       hl.dsp.window.move({ workspace = "m-1" }))
 hl.bind(mainMod .. " + CONTROL + SHIFT + mouse_up",   hl.dsp.window.move({ workspace = "m-1" }))
 hl.bind(mainMod .. " + CONTROL + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "m+1" }))
--- Mover ventana activa a un escritorio (1..10; el 0 = escritorio 10). Crea el escritorio si no existe.
+-- Mover ventana activa a un escritorio: SUPER + SHIFT + número (1..10; el 0 = escritorio 10).
+-- Crea el escritorio si no existe.
 for i = 1, 10 do
     local key = i % 10
-    hl.bind(mainMod .. " + SHIFT + CONTROL + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Move & Resize with mouse
@@ -84,6 +85,7 @@ hl.bind(mainMod .. " + period",     hl.dsp.exec_cmd("rofi -show emoji"))        
 hl.bind(mainMod .. " + K",          hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/KeyHints.sh")) -- cheatsheet de atajos (toggle)
 hl.bind(mainMod .. " + L",          hl.dsp.exec_cmd("loginctl lock-session"))            -- lock
 hl.bind(mainMod .. " + ALT + C",    hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/Wlogout.sh"))  -- menú de sesión (toggle)
+hl.bind("ALT + SHIFT + Space",      hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/KeyboardLayout.sh cycle"))  -- teclado: EN -> ES latam -> 中文 (pinyin)
 
 -- Waybar: switchers de layout / estilo / restart
 hl.bind(mainMod .. " + CONTROL + B", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/WaybarStyles.sh"))
@@ -110,6 +112,12 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("swayosd-client --brightness raise"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lower"), { locked = true, repeating = true })
 
+-- Night light: alterna el filtro de luz azul con horario solar automático
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/DarkLight.sh toggle"))
+
+-- Calendario (isla quickshell): grilla del mes + clima de hoy
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/CalendarIsland.sh"))
+
 -------------------
 ---- UTILITIES ----
 -------------------
@@ -126,6 +134,12 @@ hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("quickshell -n -c hyprquickpa
 -- Fallback rofi (grilla de iconos): mismo backend wallpaper.sh
 hl.bind(mainMod .. " + ALT + W",   hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/wallpaper.sh"))
 
+-- Shaders de pantalla (ShaderCycle.sh): ciclar perfiles ; SUPER+ALT+S = menú (ver/crear/editar)
+hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ShaderCycle.sh next"))
+hl.bind(mainMod .. " + SHIFT + bracketleft",  hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ShaderCycle.sh prev"))
+hl.bind(mainMod .. " + SHIFT + backslash",    hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ShaderCycle.sh off"))
+hl.bind(mainMod .. " + ALT + S",              hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/ShaderMenu.sh"))
+
 -- Clipboard
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd('cliphist list | rofi -dmenu -i -p "Clipboard" | cliphist decode | wl-copy'))
 
@@ -136,30 +150,32 @@ hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("swaync-client -d -sw")) -- toggle no
 ---- WORKSPACES & MONITORS ----
 -------------------------------
 
--- Focus on monitors
-hl.bind(mainMod .. " + 1", hl.dsp.focus({ monitor = MONITOR1 }))
-hl.bind(mainMod .. " + 2", hl.dsp.focus({ monitor = MONITOR2 }))
-hl.bind(mainMod .. " + 3", hl.dsp.focus({ monitor = MONITOR3 }))
+-- Focus on monitors: deshabilitado (setup de 1 monitor; SUPER + número ahora
+-- cambia de escritorio, ver abajo). Backup por si algún día hay 2+ monitores:
+-- hl.bind(mainMod .. " + 1", hl.dsp.focus({ monitor = MONITOR1 }))
+-- hl.bind(mainMod .. " + 2", hl.dsp.focus({ monitor = MONITOR2 }))
+-- hl.bind(mainMod .. " + 3", hl.dsp.focus({ monitor = MONITOR3 }))
 
--- Cambiar de escritorio con SUPER + SHIFT + número (1..9, 0 = escritorio 10).
+-- Cambiar de escritorio: SOLO con SUPER + número (1..9, 0 = escritorio 10).
 -- Si el escritorio no existe todavía (6..10) Hyprland lo crea al vuelo y waybar
--- le pone el hanzi correspondiente.
+-- le pone el hanzi correspondiente. (Antes vivía en SUPER+SHIFT+número, que
+-- ahora mueve la ventana activa; ver el loop en la sección de arriba.)
 for i = 1, 10 do
     local key = i % 10
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.focus({ workspace = i }))
+    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
 end
 
--- Focus on workspace number
--- Absolute
-for i = 1, NUM_WPM do
-    local key = i % 10
-    hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.focus({ workspace = i }))
-end
--- Relative
-for i = 1, NUM_WPM do
-    local key = i % 10
-    hl.bind(mainMod .. " + CONTROL + " .. key, hl.dsp.focus({ workspace = "m~" .. i }))
-end
+-- (Se sacaron los duplicados ALT+número = ir a escritorio absoluto y
+-- CONTROL+número = ir a escritorio relativo del monitor: quedó todo unificado
+-- en SUPER + número arriba.)
+-- for i = 1, NUM_WPM do
+--     local key = i % 10
+--     hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.focus({ workspace = i }))
+-- end
+-- for i = 1, NUM_WPM do
+--     local key = i % 10
+--     hl.bind(mainMod .. " + CONTROL + " .. key, hl.dsp.focus({ workspace = "m~" .. i }))
+-- end
 
 -- Move to adjacent workspaces and next empty on a given monitor
 hl.bind(mainMod .. " + CONTROL + Right",       hl.dsp.focus({ workspace = "m+1" }))

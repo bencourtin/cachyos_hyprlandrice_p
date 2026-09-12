@@ -4,7 +4,7 @@ A modular **CachyOS + Hyprland** rice with **Material You** colors generated fro
 the wallpaper by [matugen](https://github.com/InioX/matugen). No Noctalia — every
 component is a plain config you can read and swap.
 
-The bar, the wallpaper picker and three pop-up "islands" (weather, media,
+The bar, the wallpaper picker and four pop-up "islands" (weather, media, calendar,
 keybind cheatsheet) are small [Quickshell](https://quickshell.outfoxxed.me/)
 programs; the rest is waybar + the usual Hyprland ecosystem.
 
@@ -28,7 +28,8 @@ programs; the rest is waybar + the usual Hyprland ecosystem.
 | Lock / idle | hyprlock + hypridle |
 | Session menu | wlogout (`SUPER+ALT+C`) |
 | OSD | swayosd |
-| Islands | Quickshell — weather, media players, keybind cheatsheet, wallpaper dock |
+| Night light | hyprsunset — auto solar schedule (`DarkLight.sh`, `SUPER+SHIFT+N`) |
+| Islands | Quickshell — weather, media players, calendar, keybind cheatsheet, wallpaper dock |
 
 ## Install
 
@@ -80,11 +81,13 @@ Press **`SUPER+K`** for the full searchable cheatsheet (it mirrors
 | `SUPER+E` | file manager — yazi in a floating kitty |
 | `SUPER+SHIFT+W` | wallpaper dock (Quickshell) · `SUPER+ALT+W` rofi fallback |
 | `SUPER+ALT+C` | session menu (wlogout) |
+| `SUPER+SHIFT+N` | night light toggle — auto solar schedule ⇄ off |
+| `SUPER+SHIFT+C` | calendar island (month grid + today's weather) · ‹ › or ←/→ to change month |
 | `SUPER+K` | keybind cheatsheet |
 | `SUPER+SHIFT+1..0` | go to workspace N (created on demand; 5 persistent) |
 | `SUPER+SHIFT+CONTROL+N` | move window to workspace N |
 | click clock | weather island · right-click: refresh |
-| click media pill | media-players island |
+| click media pill | media island — album art, seek bar, ⏮⏯⏭, per-player switch |
 
 ## Repo layout
 
@@ -92,7 +95,7 @@ Press **`SUPER+K`** for the full searchable cheatsheet (it mirrors
 config/            mirrors ~/.config
   hypr/            Lua config, scripts/, UserScripts/, hyprlock, hypridle
   waybar/          configs/, style/, Modules*
-  quickshell/      clima · mediactl · keyhints · hyprquickpaper
+  quickshell/      clima · mediactl · calendario · keyhints · hyprquickpaper
   matugen/         config.toml + templates/
   yazi/            yazi.toml, keymap.toml, theme.toml (matugen)
   rofi swaync wlogout cava uwsm
@@ -106,9 +109,12 @@ docs/architecture.md   how each piece is wired
 ## Credits
 
 - Bar layout & scripts adapted from **JaKooLit** / `binnewbs/arch-hyprland`.
-- Weather backend (Open-Meteo + IP geolocation) ported from
-  **[serpantinum](https://github.com/ilyamiro/serpantinum)**; moon phase is
-  computed locally in awk.
+- Weather backend (Open-Meteo + IP geolocation) and the night-light solar
+  schedule (`DarkLight.sh`) ported from
+  **[serpantinum](https://github.com/ilyamiro/serpantinum)** (AGPL-3.0): the
+  approach is reused, the code is reimplemented. Moon phase is computed locally
+  in awk. The calendar island is a fresh, minimal take on serpantinum's
+  `CalendarPopup`.
 - Wallpaper dock after **iamsurjog/hyprquickpaper**.
 
 ## Caveats
@@ -117,6 +123,10 @@ docs/architecture.md   how each piece is wired
   `config/hypr/config/monitors.lua`; `battery` waybar module is inert.
 - The weather island's second city is set in the header of
   `config/hypr/UserScripts/ClimaClock.sh` (`CITY_FIXED`).
+- Night light needs `hyprsunset`; without it `DarkLight.sh` is a no-op.
+  It reuses the weather module's cached location
+  (`~/.cache/waybar-clima/geo.json`) — pin `FIXED_LAT` / `FIXED_LON` in the
+  script header to override. Day/night temps are `DAY_TEMP` / `NIGHT_TEMP`.
 - If hyprlock rejects a correct password after a few tries, it's
   `pam_faillock` locking the account — see the troubleshooting note in
   [docs/architecture.md](docs/architecture.md).

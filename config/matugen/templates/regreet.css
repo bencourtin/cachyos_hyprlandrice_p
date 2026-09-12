@@ -1,0 +1,96 @@
+/*
+ * ReGreet — generado por matugen (NO EDITAR).
+ * Paleta Material You desde wallpaper; estilo alineado al lockscreen (hyprlock).
+ * Se copia a /etc/greetd/regreet.css vía rice-greeter-sync (systemd path unit).
+ */
+
+/* --- Named colors de libadwaita (misma técnica que gtk-colors.css) --- */
+@define-color accent_color            {{colors.primary.default.hex}};
+@define-color accent_bg_color         {{colors.primary.default.hex}};
+@define-color accent_fg_color         {{colors.on_primary.default.hex}};
+@define-color window_bg_color         {{colors.surface.default.hex}};
+@define-color window_fg_color         {{colors.on_surface.default.hex}};
+@define-color view_bg_color           {{colors.surface_container.default.hex}};
+@define-color view_fg_color           {{colors.on_surface.default.hex}};
+@define-color card_bg_color           {{colors.surface_container.default.hex}};
+@define-color card_fg_color           {{colors.on_surface.default.hex}};
+@define-color popover_bg_color        {{colors.surface_container_high.default.hex}};
+@define-color popover_fg_color        {{colors.on_surface.default.hex}};
+@define-color headerbar_bg_color      {{colors.surface.default.hex}};
+@define-color headerbar_fg_color      {{colors.on_surface.default.hex}};
+@define-color error_color             {{colors.error.default.hex}};
+
+/* --- Tipografía del rice --- */
+* {
+    font-family: "JetBrainsMono Nerd Font", "JetBrainsMono Nerd Font Mono", monospace;
+}
+
+window, .background {
+    color: {{colors.on_surface.default.hex}};
+}
+
+/* --- Tarjeta central de login: superficie translúcida y redondeada (como el
+       input-field de hyprlock: rounding 22, borde de acento) --- */
+box.vertical > clamp > box,
+.NM,
+grid {
+    background-color: alpha({{colors.surface.default.hex}}, 0.70);
+    border: 1px solid alpha({{colors.primary.default.hex}}, 0.22);
+    border-radius: 22px;
+    padding: 26px 30px;
+}
+
+/* --- Campo de contraseña / usuario --- */
+entry, entry.password {
+    background-color: alpha({{colors.on_surface.default.hex}}, 0.08);
+    color: {{colors.secondary.default.hex}};
+    border: 2px solid {{colors.primary_container.default.hex}};
+    border-radius: 22px;
+    padding: 9px 16px;
+    caret-color: {{colors.primary.default.hex}};
+}
+entry:focus-within {
+    border-color: {{colors.primary.default.hex}};
+    background-color: alpha({{colors.on_surface.default.hex}}, 0.12);
+}
+entry > text > placeholder {
+    color: alpha({{colors.secondary.default.hex}}, 0.55);
+}
+
+/* --- Botones (login / reboot / poweroff) --- */
+button {
+    background-color: {{colors.primary_container.default.hex}};
+    color: {{colors.on_primary_container.default.hex}};
+    border: none;
+    border-radius: 22px;
+    padding: 8px 18px;
+}
+button:hover {
+    background-color: {{colors.primary.default.hex}};
+    color: {{colors.on_primary.default.hex}};
+}
+button:active {
+    background-color: {{colors.primary_fixed_dim.default.hex}};
+}
+
+/* --- Selectores de sesión / usuario --- */
+dropdown, combobox {
+    border-radius: 16px;
+}
+dropdown > button,
+combobox button {
+    background-color: alpha({{colors.on_surface.default.hex}}, 0.08);
+    color: {{colors.on_surface.default.hex}};
+    border: 1px solid alpha({{colors.primary.default.hex}}, 0.20);
+    border-radius: 16px;
+}
+popover > contents {
+    background-color: {{colors.surface_container_high.default.hex}};
+    color: {{colors.on_surface.default.hex}};
+    border-radius: 14px;
+}
+
+/* --- Mensajes de error / feedback --- */
+label.error, .error {
+    color: {{colors.error.default.hex}};
+}
