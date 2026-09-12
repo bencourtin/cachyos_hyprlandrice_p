@@ -1,29 +1,29 @@
 # matugen-generated color files (regenerated from the wallpaper on first run).
 # install.sh seeds each one from its committed *.default sibling.
-config/hypr/config/colors-matugen.lua
-config/hypr/hyprlock-colors.conf
-config/waybar/colors.css
-config/rofi/colors.rasi
-config/quickshell/clima/colors.json
-config/quickshell/calendario/colors.json
-config/quickshell/mediactl/colors.json
-config/quickshell/keyhints/colors.json
-config/cava/config
-config/wlogout/colors.css
-config/swaync/colors.css
-config/yazi/theme.toml
-config/gtk-3.0/matugen.css
-config/gtk-4.0/matugen.css
-config/kitty/matugen.conf
-config/btop/themes/matugen.theme
-config/quickshell/mixerctl/colors.json
-config/quickshell/netmon/colors.json
+rice/.config/hypr/config/colors-matugen.lua
+rice/.config/hypr/hyprlock-colors.conf
+rice/.config/waybar/colors.css
+rice/.config/rofi/colors.rasi
+rice/.config/quickshell/clima/colors.json
+rice/.config/quickshell/calendario/colors.json
+rice/.config/quickshell/mediactl/colors.json
+rice/.config/quickshell/keyhints/colors.json
+rice/.config/cava/config
+rice/.config/wlogout/colors.css
+rice/.config/swaync/colors.css
+rice/.config/yazi/theme.toml
+rice/.config/gtk-3.0/matugen.css
+rice/.config/gtk-4.0/matugen.css
+rice/.config/kitty/matugen.conf
+rice/.config/btop/themes/matugen.theme
+rice/.config/quickshell/mixerctl/colors.json
+rice/.config/quickshell/netmon/colors.json
 
 # fcitx5 regenerates this by scanning /usr/share/xkeyboard-config-2 on first run
-config/fcitx5/conf/cached_layouts
+rice/.config/fcitx5/conf/cached_layouts
 
 # stray manual backups, not meant to be tracked
-config/wlogout/layout.bak.*
+rice/.config/wlogout/layout.bak.*
 
 # editor / OS noise
 *.swp
@@ -31,4 +31,4 @@ config/wlogout/layout.bak.*
 .DS_Store
 
 # runtime state written by wallpaper.sh
-config/hypr/current_wallpaper
+rice/.config/hypr/current_wallpaper

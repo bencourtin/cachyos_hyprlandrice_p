@@ -33,8 +33,13 @@ programs; the rest is waybar + the usual Hyprland ecosystem.
 
 ## Install
 
+Deployed with [GNU Stow](https://www.gnu.org/software/stow/): the repo has a
+single stow package, `rice/`, whose internal layout (`rice/.config/hypr`,
+`rice/.local/share/applications/yazi.desktop`, …) mirrors `$HOME` exactly, so
+`stow` symlinks each piece straight into place.
+
 ```sh
-# 1. packages (CachyOS / Arch)
+# 1. packages (CachyOS / Arch) — includes `stow` itself
 paru -S --needed - < packages.txt
 
 # 2. clone + link
@@ -49,15 +54,20 @@ matugen image "$img" -m dark --source-color-index 0
 hyprctl reload && killall -SIGUSR2 waybar
 ```
 
-`install.sh` **symlinks** `config/<component>` into `~/.config`, so after the
-first run a `git pull` is enough to update — the changes are live immediately.
-Directories shared with non-rice config (`gtk-3.0`, `fish`, `kitty`, …) are
-linked file-by-file instead. `./uninstall.sh` removes the symlinks.
+`install.sh` seeds the matugen color files from their `*.default` sibling when
+missing, moves any real (non-symlink) file/dir in the way to
+`~/.rice-backup-<timestamp>`, then runs `stow -d "$REPO" -t "$HOME" rice`.
+Whole directories that are 100% rice (`hypr`, `waybar`, `quickshell`, `fcitx5`, …)
+become one directory symlink each; directories shared with non-rice config
+(`gtk-3.0`, `fish`, `kitty`, …) get stow's normal per-file folding instead, so
+unrelated files there are left untouched. After the first run, `git pull` +
+`./install.sh` is enough to pick up changes — they're live immediately since
+the linked files ARE the repo's. `./uninstall.sh` runs `stow -D` to remove them.
 
 ## How theming works
 
 `matugen` reads the wallpaper and renders every `~/.config/matugen/templates/*`
-to its target (see `config/matugen/config.toml`). Generated color files are
+to its target (see `rice/.config/matugen/config.toml`). Generated color files are
 **gitignored**; `install.sh` seeds each from a committed `*.default` so the
 session has valid colors before the first run.
 
@@ -73,7 +83,7 @@ session has valid colors before the first run.
 ## Keybinds
 
 Press **`SUPER+K`** for the full searchable cheatsheet (it mirrors
-`config/hypr/config/binds.lua`). A few:
+`rice/.config/hypr/config/binds.lua`). A few:
 
 | Key | Action |
 | --- | --- |
@@ -92,16 +102,20 @@ Press **`SUPER+K`** for the full searchable cheatsheet (it mirrors
 ## Repo layout
 
 ```
-config/            mirrors ~/.config
-  hypr/            Lua config, scripts/, UserScripts/, hyprlock, hypridle
-  waybar/          configs/, style/, Modules*
-  quickshell/      clima · mediactl · calendario · keyhints · hyprquickpaper
-  matugen/         config.toml + templates/
-  yazi/            yazi.toml, keymap.toml, theme.toml (matugen)
-  rofi swaync wlogout cava uwsm
-  gtk-3.0 gtk-4.0 fish kitty alacritty btop   (selected files)
-  *.default        seed copies of matugen-generated color files
-local/share/applications/yazi.desktop
+rice/                    the single stow package — this is what gets symlinked
+  .config/               mirrors ~/.config
+    hypr/                Lua config, scripts/, UserScripts/, hyprlock, hypridle
+    waybar/              configs/, style/, Modules*
+    quickshell/          clima · mediactl · calendario · keyhints · mixerctl · netmon · hyprquickpaper
+    matugen/             config.toml + templates/
+    fcitx5/              EN / ES latam / 中文 pinyin switching (ALT+SHIFT+Space)
+    fastfetch/           terminal greeting
+    yazi/                yazi.toml, keymap.toml, theme.toml (matugen)
+    rofi swaync wlogout cava uwsm
+    gtk-3.0 gtk-4.0 fish kitty alacritty btop   (selected files, stow folds per-file)
+    mimeapps.list
+    *.default            seed copies of matugen-generated color files
+  .local/share/applications/yazi.desktop
 install.sh  uninstall.sh  packages.txt
 docs/architecture.md   how each piece is wired
 ```
@@ -120,9 +134,9 @@ docs/architecture.md   how each piece is wired
 ## Caveats
 
 - **Desktop-specific:** monitor hardcoded to `DP-1` in
-  `config/hypr/config/monitors.lua`; `battery` waybar module is inert.
+  `rice/.config/hypr/config/monitors.lua`; `battery` waybar module is inert.
 - The weather island's second city is set in the header of
-  `config/hypr/UserScripts/ClimaClock.sh` (`CITY_FIXED`).
+  `rice/.config/hypr/UserScripts/ClimaClock.sh` (`CITY_FIXED`).
 - Night light needs `hyprsunset`; without it `DarkLight.sh` is a no-op.
   It reuses the weather module's cached location
   (`~/.cache/waybar-clima/geo.json`) — pin `FIXED_LAT` / `FIXED_LON` in the

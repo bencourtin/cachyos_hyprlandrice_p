@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
-# install.sh — deploy the rice by symlinking config/ into ~/.config
+# install.sh — deploy the rice with GNU Stow.
 #
-#   ./install.sh          symlink everything (existing files are backed up)
+#   ./install.sh          seed matugen defaults, clear conflicts, `stow` the rice
 #   ./install.sh --dry    show what would happen, touch nothing
 #
-# Re-run any time after `git pull` — symlinks mean the pulled changes are live
-# immediately. Nothing here needs root.
+# Re-run any time after `git pull` — stow just re-links, changes are live
+# immediately (the linked files ARE the repo's). Nothing here needs root,
+# except installing `stow` itself the first time: sudo pacman -S --needed stow
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SRC="$REPO_DIR/config"
-DST="${XDG_CONFIG_HOME:-$HOME/.config}"
+PKG_DIR="$REPO_DIR/rice"
+SRC="$PKG_DIR/.config"
+DST="$HOME/.config"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP="$HOME/.rice-backup-$STAMP"
 DRY=0
 [ "${1:-}" = "--dry" ] && DRY=1
 
-# Whole directories that are 100% part of the rice -> one symlink each.
-DIR_LINKS=(hypr waybar quickshell matugen rofi swaync wlogout cava uwsm yazi)
+command -v stow >/dev/null || { echo "stow not found — install it first: sudo pacman -S --needed stow" >&2; exit 1; }
 
-# Individual files inside directories shared with non-rice config -> file symlinks.
+say() { printf '%s\n' "$*"; }
+run() { if [ "$DRY" = 1 ]; then say "  [dry] $*"; else eval "$@"; fi; }
+
+# Whole directories that are 100% part of the rice -> stow folds each into a
+# single directory symlink once nothing real is left in its way.
+DIR_LINKS=(hypr waybar quickshell matugen rofi swaync wlogout cava uwsm yazi fcitx5 fastfetch)
+
+# Individual files/dirs inside locations shared with non-rice config, plus
+# top-level files -> stow symlinks just these, leaving siblings untouched.
 FILE_LINKS=(
   gtk-3.0/gtk.css
   gtk-3.0/settings.ini
@@ -30,11 +39,7 @@ FILE_LINKS=(
   alacritty/alacritty.toml
   alacritty/themes/noctalia.toml
   btop/btop.conf
-)
-
-# Files under ~/.local (not ~/.config). rel path is under repo ./local/ and ~/.local/.
-DATA_LINKS=(
-  share/applications/yazi.desktop
+  mimeapps.list
 )
 
 # matugen writes these; they are gitignored. Seed from *.default when absent so
@@ -47,6 +52,8 @@ DEFAULTS=(
   quickshell/clima/colors.json
   quickshell/calendario/colors.json
   quickshell/mediactl/colors.json
+  quickshell/mixerctl/colors.json
+  quickshell/netmon/colors.json
   quickshell/keyhints/colors.json
   cava/config
   wlogout/colors.css
@@ -58,31 +65,21 @@ DEFAULTS=(
   btop/themes/matugen.theme
 )
 
-say() { printf '%s\n' "$*"; }
-run() { if [ "$DRY" = 1 ]; then say "  [dry] $*"; else eval "$@"; fi; }
-
 same_target() { [ -L "$1" ] && [ "$(readlink -f "$1")" = "$(readlink -f "$2")" ]; }
 
-backup() { # $1 = absolute path to move aside, $2 = repo-relative name
-  local tgt="$1" rel="$2"
-  mkdir -p "$(dirname "$BACKUP/$rel")"
-  run "mv \"$tgt\" \"$BACKUP/$rel\""
-  say "  ~ backed up $rel -> $BACKUP/$rel"
-}
-
-link() { # $1 = repo-relative path (file or dir); $2/$3 = src/dst roots (default config)
-  local rel="$1"
-  local src="${2:-$SRC}/$rel"
-  local tgt="${3:-$DST}/$rel"
+# Move a real (non-symlink) file/dir aside so stow has a clear spot to link into.
+clear_conflict() { # $1 = repo-relative path under .config
+  local rel="$1" tgt="$DST/$rel" src="$SRC/$rel"
   [ -e "$src" ] || { say "  ! missing in repo: $rel (skipped)"; return 0; }
-  if same_target "$tgt" "$src"; then say "  = $rel"; return 0; fi
-  run "mkdir -p \"$(dirname "$tgt")\""
-  if [ -e "$tgt" ] || [ -L "$tgt" ]; then backup "$tgt" "$rel"; fi
-  run "ln -s \"$src\" \"$tgt\""
-  say "  + $rel"
+  if same_target "$tgt" "$src"; then say "  = $rel (already linked)"; return 0; fi
+  if [ -e "$tgt" ] || [ -L "$tgt" ]; then
+    mkdir -p "$(dirname "$BACKUP/$rel")"
+    run "mv \"$tgt\" \"$BACKUP/$rel\""
+    say "  ~ backed up $rel -> $BACKUP/$rel"
+  fi
 }
 
-say "rice install  (repo: $REPO_DIR)"
+say "rice install (repo: $REPO_DIR)"
 [ "$DRY" = 1 ] && say "DRY RUN — nothing will be written"
 
 say ""
@@ -97,16 +94,22 @@ for rel in "${DEFAULTS[@]}"; do
 done
 
 say ""
-say "linking directories into $DST:"
-for d in "${DIR_LINKS[@]}"; do link "$d"; done
+say "clearing conflicts in \$HOME/.config so stow can link cleanly:"
+for d in "${DIR_LINKS[@]}"; do clear_conflict "$d"; done
+for f in "${FILE_LINKS[@]}"; do clear_conflict "$f"; done
+if [ -e "$HOME/.local/share/applications/yazi.desktop" ] && [ ! -L "$HOME/.local/share/applications/yazi.desktop" ]; then
+  mkdir -p "$BACKUP/local/share/applications"
+  run "mv \"$HOME/.local/share/applications/yazi.desktop\" \"$BACKUP/local/share/applications/yazi.desktop\""
+  say "  ~ backed up local/share/applications/yazi.desktop -> $BACKUP/..."
+fi
 
 say ""
-say "linking individual files:"
-for f in "${FILE_LINKS[@]}"; do link "$f"; done
-
-say ""
-say "linking ~/.local files:"
-for f in "${DATA_LINKS[@]}"; do link "$f" "$REPO_DIR/local" "$HOME/.local"; done
+say "stowing rice/ into \$HOME:"
+if [ "$DRY" = 1 ]; then
+  stow -n -v -d "$REPO_DIR" -t "$HOME" rice
+else
+  stow -v -d "$REPO_DIR" -t "$HOME" rice
+fi
 
 say ""
 say "done."

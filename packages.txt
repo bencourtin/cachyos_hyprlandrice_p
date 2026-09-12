@@ -82,3 +82,16 @@ kitty                      # primary terminal (matugen reloads it)
 alacritty
 btop
 cava
+
+# --- Input method (EN / ES latam / 中文 pinyin — ALT+SHIFT+Space) ---
+fcitx5
+fcitx5-chinese-addons      # NOT fcitx5-pinyin, that target doesn't exist
+fcitx5-gtk
+fcitx5-qt
+fcitx5-configtool
+
+# --- Terminal greeting ---
+fastfetch
+
+# --- Deploying this repo ---
+stow
