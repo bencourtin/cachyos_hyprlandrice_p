@@ -69,7 +69,9 @@ same_target() { [ -L "$1" ] && [ "$(readlink -f "$1")" = "$(readlink -f "$2")" ]
 
 # Move a real (non-symlink) file/dir aside so stow has a clear spot to link into.
 clear_conflict() { # $1 = repo-relative path under .config
-  local rel="$1" tgt="$DST/$rel" src="$SRC/$rel"
+  local rel="$1"
+  local tgt="$DST/$rel"
+  local src="$SRC/$rel"
   [ -e "$src" ] || { say "  ! missing in repo: $rel (skipped)"; return 0; }
   if same_target "$tgt" "$src"; then say "  = $rel (already linked)"; return 0; fi
   if [ -e "$tgt" ] || [ -L "$tgt" ]; then
@@ -97,6 +99,9 @@ say ""
 say "clearing conflicts in \$HOME/.config so stow can link cleanly:"
 for d in "${DIR_LINKS[@]}"; do clear_conflict "$d"; done
 for f in "${FILE_LINKS[@]}"; do clear_conflict "$f"; done
+# DEFAULTS entries living inside a DIR_LINKS dir are already gone (whole dir
+# moved above); the ones inside a shared FILE_LINKS-only dir still need it.
+for rel in "${DEFAULTS[@]}"; do clear_conflict "$rel"; done
 if [ -e "$HOME/.local/share/applications/yazi.desktop" ] && [ ! -L "$HOME/.local/share/applications/yazi.desktop" ]; then
   mkdir -p "$BACKUP/local/share/applications"
   run "mv \"$HOME/.local/share/applications/yazi.desktop\" \"$BACKUP/local/share/applications/yazi.desktop\""
