@@ -65,7 +65,10 @@ DEFAULTS=(
   btop/themes/matugen.theme
 )
 
-same_target() { [ -L "$1" ] && [ "$(readlink -f "$1")" = "$(readlink -f "$2")" ]; }
+# True both when $1 is itself a symlink into the repo (whole-dir link) and
+# when $1 is a plain file only reached AS the repo's own file because some
+# ancestor directory is the symlink (per-file link inside a DIR_LINKS dir).
+same_target() { [ -e "$1" ] && [ "$(readlink -f "$1")" = "$(readlink -f "$2")" ]; }
 
 # Move a real (non-symlink) file/dir aside so stow has a clear spot to link into.
 clear_conflict() { # $1 = repo-relative path under .config
