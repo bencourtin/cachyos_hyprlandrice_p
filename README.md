@@ -144,6 +144,11 @@ docs/architecture.md   how each piece is wired
 - If hyprlock rejects a correct password after a few tries, it's
   `pam_faillock` locking the account — see the troubleshooting note in
   [docs/architecture.md](docs/architecture.md).
+- After a **real reboot** (not just re-running `install.sh`), `nm-applet` and
+  `blueman` may reappear in the tray even if commented out of
+  `autostart.lua` — `systemd-xdg-autostart-generator` relaunches them from
+  `/etc/xdg/autostart/*.desktop`. Mask their generated units once per
+  machine; see [docs/architecture.md](docs/architecture.md).
 - `quickshell` must be installed or `SUPER+SHIFT+W` and the islands do nothing.
 
 ## License

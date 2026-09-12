@@ -182,6 +182,33 @@ after which even the right password fails.
 
 These are system files outside this repo — apply by hand.
 
+## Duplicate tray icons after a real reboot
+
+`nm-applet`, `blueman` and `org.fcitx.Fcitx5` each ship a `.desktop` in
+`/etc/xdg/autostart/`. `systemd-xdg-autostart-generator` turns those into
+`app-<name>@autostart.service` units that start on their own in
+`graphical-session.target` on every login/reboot — completely separate from
+this repo's `hypr/config/autostart.lua`. Commenting the launch line there and
+killing the process live does **not** survive a reboot; the generated unit
+just relaunches it.
+
+Fix (per app, once per machine — not tracked by this repo, it's systemd user
+state under `~/.config/systemd/user/`):
+
+```sh
+systemctl --user mask app-blueman@autostart.service 'app-nm\x2dapplet@autostart.service'
+```
+
+fcitx5's own generated unit was left unmasked on purpose — fcitx5 itself still
+needs to run, only its tray icon is unwanted, and that's disabled a different
+way: `fcitx5/config`'s `[Behavior/DisabledAddons]` → `0=notificationitem`
+(tracked in this repo, applies automatically once stowed — see
+`rice/.config/fcitx5/config`).
+
+Check `systemctl --user list-unit-files | grep autostart` and
+`/etc/xdg/autostart/*.desktop` for any other app that "comes back on its own"
+after a reboot despite being commented out of `autostart.lua`.
+
 ## Spotify & Discord (optional)
 
 Both follow the wallpaper through matugen templates.
