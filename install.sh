@@ -78,7 +78,7 @@ clear_conflict() { # $1 = repo-relative path under .config
   [ -e "$src" ] || { say "  ! missing in repo: $rel (skipped)"; return 0; }
   if same_target "$tgt" "$src"; then say "  = $rel (already linked)"; return 0; fi
   if [ -e "$tgt" ] || [ -L "$tgt" ]; then
-    mkdir -p "$(dirname "$BACKUP/$rel")"
+    run "mkdir -p \"$(dirname "$BACKUP/$rel")\""
     run "mv \"$tgt\" \"$BACKUP/$rel\""
     say "  ~ backed up $rel -> $BACKUP/$rel"
   fi
