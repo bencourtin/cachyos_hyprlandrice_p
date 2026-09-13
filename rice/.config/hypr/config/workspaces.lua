@@ -1,6 +1,5 @@
 -- Workspace rules wiki https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- Add your workspace rules here. Increment the workspace number as you go. Do not have duplicate workspaces.
-hl.workspace_rule({ workspace = "name:gaming", monitor = PRIMARY_MONITOR, default = true })
 -- 5 escritorios persistentes (coincide con NUM_WPM y con persistent-workspaces de waybar).
 -- Los escritorios 6+ se crean dinámicamente al enfocarlos (SUPER + SHIFT + número) y
 -- waybar les asigna el hanzi correspondiente automáticamente.
